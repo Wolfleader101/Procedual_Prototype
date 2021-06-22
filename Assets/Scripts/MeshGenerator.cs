@@ -10,51 +10,65 @@ public class MeshGenerator : MonoBehaviour
     [SerializeField] private int xSize = 20;
     [SerializeField] private int zSize = 20;
 
-    [SerializeField] private float perlinNoiseScale =  0.3f;
-    [SerializeField] private float perlinNoiseOffsetX =  100f;
-    [SerializeField] private float perlinNoiseOffsetY =  100f;
-    
+    [SerializeField] private float heightScale = 4f;
+    [SerializeField] private float perlinNoiseScale = 0.3f;
+    [SerializeField] private float perlinNoiseOffsetX = 100f;
+    [SerializeField] private float perlinNoiseOffsetY = 100f;
+
     private Mesh _mesh;
     
-    private Vector3[] _vertices;
+    private Vector3[] _vertices; 
     private int[] _triangles;
-    
-    // Start is called before the first frame update
+
+
+    /* Plans for procedural generation
+     *
+     * Procedurally generated biomes including blending between biomes and biomes props (e.g trees)
+     * Procedurally generated Land-heights for biomes,
+       e.g jungle might more level variation while open-fields are flat
+     * Add in oceans, lakes and rivers
+     * A preset seed count??
+     * 
+     */
+
+
     void Start()
     {
         _mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = _mesh;
-
+        
         GeneratePerlinOffset();
+        
         CreateShape();
         UpdateMesh();
         
-        GetComponent<MeshCollider>().sharedMesh = _mesh;
+         GetComponent<MeshCollider>().sharedMesh = _mesh;
     }
 
     // used for testing in scene
     void Update()
     {
-        CreateShape();
-        UpdateMesh();
+        // CreateShape();
+        // UpdateMesh();
     }
+    
 
     void CreateShape()
     {
         _vertices = new Vector3[(xSize + 1) * (zSize + 1)];
 
-  
-        
+
         for (int i = 0, z = 0; z <= zSize; z++)
         {
             for (int x = 0; x <= xSize; x++)
             {
-                float y = Mathf.PerlinNoise(x * perlinNoiseScale + perlinNoiseOffsetX, z * perlinNoiseScale + perlinNoiseOffsetY) * 2f;
+                float y = Mathf.PerlinNoise(x * perlinNoiseScale + perlinNoiseOffsetX,
+                    z * perlinNoiseScale + perlinNoiseOffsetY) * heightScale;
                 _vertices[i] = new Vector3(x, y, z);
                 i++;
             }
         }
-        
+
         _triangles = new int[xSize * zSize * 6];
         int vert = 0, tris = 0;
         for (int z = 0; z < zSize; z++)
@@ -71,16 +85,9 @@ public class MeshGenerator : MonoBehaviour
                 vert++;
                 tris += 6;
             }
+
             vert++;
         }
-
-
-    }
-
-    void GeneratePerlinOffset()
-    {
-        perlinNoiseOffsetX = Random.Range(0f, 9999f);
-        perlinNoiseOffsetY = Random.Range(0f, 9999f);
     }
 
     void UpdateMesh()
@@ -89,14 +96,21 @@ public class MeshGenerator : MonoBehaviour
 
         _mesh.vertices = _vertices;
         _mesh.triangles = _triangles;
-        
+
         _mesh.RecalculateNormals();
     }
 
+    void GeneratePerlinOffset()
+    {
+        perlinNoiseOffsetX = Random.Range(0f, 9999f);
+        perlinNoiseOffsetY = Random.Range(0f, 9999f);
+    }
+
+
     private void OnDrawGizmos()
     {
-        if (_vertices == null) return;
-        
+       if (_vertices == null) return;
+
         // for (int i = 0; i < _vertices.Length; i++)
         // {
         //     Gizmos.color = Color.red;
