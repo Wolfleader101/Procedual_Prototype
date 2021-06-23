@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,12 @@ using UnityEngine;
 public class ChunkManager : MonoBehaviour
 {
     public int chunkSize;
+    
+    public float chunkPosX;
+    public float chunkPosZ;
+    public float perlinOffset;
+    public float heightScale = 4f;
+    public float perlinNoiseScale = 0.04f;
     
     private Mesh _mesh;
     
@@ -22,6 +29,7 @@ public class ChunkManager : MonoBehaviour
         GetComponent<MeshCollider>().sharedMesh = _mesh;
     }
     
+
     void CreateShape()
     {
         _vertices = new Vector3[(chunkSize + 1) * (chunkSize + 1)];
@@ -31,10 +39,11 @@ public class ChunkManager : MonoBehaviour
         {
             for (int x = 0; x <= chunkSize; x++)
             {
-                // float y = Mathf.PerlinNoise(x * perlinNoiseScale + perlinNoiseOffsetX,
-                //     z * perlinNoiseScale + perlinNoiseOffsetY) * heightScale;
+                 float y = Mathf.PerlinNoise(
+                     ((chunkSize * chunkPosX) + x) * perlinNoiseScale + perlinOffset,
+                     ((chunkSize * chunkPosZ) + z) * perlinNoiseScale + perlinOffset) * heightScale;
                 
-                _vertices[i] = new Vector3(x, 0, z);
+                _vertices[i] = new Vector3(x, y, z);
                 i++;
             }
         }

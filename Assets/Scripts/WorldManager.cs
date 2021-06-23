@@ -14,12 +14,13 @@ public class WorldManager : MonoBehaviour
 
     private float _perlinOffset;
     
+    
     // Start is called before the first frame update
     void Start()
     {
         Random.InitState(worldSeed);
 
-        _perlinOffset = Random.value;
+        _perlinOffset = Random.value * 1000;
 
         GenerateChunks();
     }
@@ -51,17 +52,23 @@ public class WorldManager : MonoBehaviour
                 }
                 //Debug.Log($"Row: {row} at col {col}, current chunk = {currentChunk}");
                 
-                CreateChunk(row, col,chunkSize * col, chunkSize * row);
+                CreateChunk(row, col);
             }
         }
 
     }
 
-    void CreateChunk(int row, int col, int x, int z)
+    void CreateChunk(int row, int col)
     {
+        int x = chunkSize * col;
+        int z = chunkSize * row;
+        
         GameObject chunk = new GameObject($"Chunk {row}x{col}", typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider), typeof(ChunkManager));
         chunk.GetComponent<ChunkManager>().chunkSize = chunkSize;
-        
+        chunk.GetComponent<ChunkManager>().perlinOffset = _perlinOffset;
+        chunk.GetComponent<ChunkManager>().chunkPosX = col + 1;
+        chunk.GetComponent<ChunkManager>().chunkPosZ = row + 1;
+
         chunk.transform.localPosition = new Vector3(x, 0, z);
 
         chunk.GetComponent<MeshRenderer>().material = grassMat;
