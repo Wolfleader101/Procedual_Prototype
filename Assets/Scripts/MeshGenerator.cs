@@ -17,7 +17,7 @@ public class MeshGenerator : MonoBehaviour
 
     private Mesh _mesh;
     
-    private Vector3[] _vertices; 
+    private Vector3[] _vertices;
     private int[] _triangles;
 
 
@@ -42,14 +42,14 @@ public class MeshGenerator : MonoBehaviour
         CreateShape();
         UpdateMesh();
         
-         GetComponent<MeshCollider>().sharedMesh = _mesh;
+        GetComponent<MeshCollider>().sharedMesh = _mesh;
     }
 
     // used for testing in scene
     void Update()
     {
-        // CreateShape();
-        // UpdateMesh();
+         // CreateShape();
+         // UpdateMesh();
     }
     
 
@@ -64,7 +64,8 @@ public class MeshGenerator : MonoBehaviour
             {
                 float y = Mathf.PerlinNoise(x * perlinNoiseScale + perlinNoiseOffsetX,
                     z * perlinNoiseScale + perlinNoiseOffsetY) * heightScale;
-                _vertices[i] = new Vector3(x, y, z);
+                
+                _vertices[i] = new Vector3(x, 0, z);
                 i++;
             }
         }
@@ -85,7 +86,7 @@ public class MeshGenerator : MonoBehaviour
                 vert++;
                 tris += 6;
             }
-
+           
             vert++;
         }
     }
@@ -111,10 +112,13 @@ public class MeshGenerator : MonoBehaviour
     {
        if (_vertices == null) return;
 
-        // for (int i = 0; i < _vertices.Length; i++)
-        // {
-        //     Gizmos.color = Color.red;
-        //     Gizmos.DrawSphere(_vertices[i], 0.1f);
-        // }
+         // for (int i = 0; i < _vertices.Length; i++)
+         // {
+         //     Gizmos.color = Color.red;
+         //     if (i % 5 == 0)
+         //     {
+         //         Gizmos.DrawSphere(_vertices[i], 0.1f);
+         //     }
+         // }
     }
 }
