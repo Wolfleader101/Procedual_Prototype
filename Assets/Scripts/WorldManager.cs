@@ -64,6 +64,6 @@ public class WorldManager : MonoBehaviour
         
         chunk.transform.localPosition = new Vector3(x, 0, z);
 
-        chunk.GetComponent<MeshRenderer>().materials[0] = grassMat;
+        chunk.GetComponent<MeshRenderer>().material = grassMat;
     }
 }
