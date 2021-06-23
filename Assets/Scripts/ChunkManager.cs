@@ -17,7 +17,7 @@ public class ChunkManager : MonoBehaviour
     
     private Vector3[] _vertices;
     private int[] _triangles;
-    
+
     void Start()
     {
         _mesh = new Mesh();
@@ -26,7 +26,7 @@ public class ChunkManager : MonoBehaviour
         CreateShape();
         UpdateMesh();
         
-        GetComponent<MeshCollider>().sharedMesh = _mesh;
+        gameObject.layer = 6;
     }
     
 
@@ -77,6 +77,20 @@ public class ChunkManager : MonoBehaviour
         _mesh.triangles = _triangles;
 
         _mesh.RecalculateNormals();
+        
+        _mesh.RecalculateBounds();
+        GetComponent<MeshCollider>().sharedMesh = _mesh;
+        //GetComponent<MeshCollider>().convex = true;
     }
+    
+    public void OnCollisionEnter(Collision other)
+    {
+        Debug.Log("test");
+        //if (other.gameObject.CompareTag("Player"))
+            
+           // _manager.GenerateNewChunks(_currentX, _currentZ);
+    }
+    
+
     
 }

@@ -64,6 +64,7 @@ public class WorldManager : MonoBehaviour
         int z = chunkSize * row;
         
         GameObject chunk = new GameObject($"Chunk {row}x{col}", typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider), typeof(ChunkManager));
+        chunk.transform.parent = transform;
         chunk.GetComponent<ChunkManager>().chunkSize = chunkSize;
         chunk.GetComponent<ChunkManager>().perlinOffset = _perlinOffset;
         chunk.GetComponent<ChunkManager>().chunkPosX = col + 1;
