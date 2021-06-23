@@ -169,12 +169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4727ede5698ecf24c8b21c32dbf369ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xSize: 128
-  zSize: 128
-  heightScale: 4
-  perlinNoiseScale: 0.04
-  perlinNoiseOffsetX: 100
-  perlinNoiseOffsetY: 100
+  worldSeed: 42069
+  perlinOffset: 0
 --- !u!23 &423828446
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -694,7 +690,7 @@ GameObject:
   - component: {fileID: 1283893887}
   - component: {fileID: 1283893886}
   m_Layer: 0
-  m_Name: ChunkGen
+  m_Name: WorldManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -709,10 +705,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1283893885}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab3debd413d857f4eacbd9b787c122f6, type: 3}
+  m_Script: {fileID: 11500000, guid: 4727ede5698ecf24c8b21c32dbf369ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seed: 42069
+  worldSeed: 42069
   perlinOffset: 0
 --- !u!4 &1283893887
 Transform:

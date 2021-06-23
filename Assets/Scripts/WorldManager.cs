@@ -48,8 +48,8 @@ public class MeshGenerator : MonoBehaviour
     // used for testing in scene
     void Update()
     {
-         // CreateShape();
-         // UpdateMesh();
+         CreateShape();
+         UpdateMesh();
     }
     
 
@@ -65,7 +65,7 @@ public class MeshGenerator : MonoBehaviour
                 float y = Mathf.PerlinNoise(x * perlinNoiseScale + perlinNoiseOffsetX,
                     z * perlinNoiseScale + perlinNoiseOffsetY) * heightScale;
                 
-                _vertices[i] = new Vector3(x, 0, z);
+                _vertices[i] = new Vector3(x, y, z);
                 i++;
             }
         }

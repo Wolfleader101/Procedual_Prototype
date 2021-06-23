@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChunkManager : MonoBehaviour
+public class WorldManager : MonoBehaviour
 {
-    [SerializeField] private int seed = 42069;
+    [SerializeField] private int worldSeed = 42069;
 
     [SerializeField] float perlinOffset;
     
     // Start is called before the first frame update
     void Start()
     {
-        Random.InitState(seed);
+        Random.InitState(worldSeed);
 
         perlinOffset = Random.value;
     }
@@ -19,6 +19,5 @@ public class ChunkManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 }
